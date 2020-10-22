@@ -22,6 +22,7 @@ public class PlatformerPlayer : MonoBehaviour
     private BoxCollider2D _box;
     private int _jumpDelay = 0;
     private int _jumpsLeft = 0;
+    private float _gravity = -25f;
 
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -55,6 +56,7 @@ public class PlatformerPlayer : MonoBehaviour
         _body = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _box = GetComponent<BoxCollider2D>();
+        Physics2D.gravity = new Vector3(0f, _gravity,0f);
         Score = 0;
         InMyZone = false;
 
