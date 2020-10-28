@@ -13,7 +13,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject countDownUI;
     public GameObject endMenuUI;
-    public GameObject ScoreDisplay;
+    public GameObject scoreDisplay;
+    public GameObject optionsMenu;
     public Text countDownText;
     public AudioSource countSound;
     public Text scoreDisplayText;
@@ -66,9 +67,24 @@ public class PauseMenu : MonoBehaviour
     public void EndPause()
     {
         Time.timeScale = 0f;
-        ScoreDisplay.SetActive(false);
+        scoreDisplay.SetActive(false);
         finalScoreDisplayText.text = $"{PlatformerPlayer.Score}pts ";
         endMenuUI.SetActive(true);
+    }
+
+    public void OpenOptions()
+    {
+        pauseMenuUI.SetActive(false);
+        scoreDisplay.SetActive(false);
+        optionsMenu.SetActive(true);
+        
+    }
+
+    public void CloseOptions()
+    {
+        pauseMenuUI.SetActive(true);
+        scoreDisplay.SetActive(true);
+        optionsMenu.SetActive(false);
     }
 
     public void Restart()
@@ -76,14 +92,14 @@ public class PauseMenu : MonoBehaviour
         // SceneManager.LoadScene(_currentScene.name);
         Unpause();
         SceneManager.LoadScene("BeepBlockSkyway");
-        
-        
     }
 
     IEnumerator SlowUnpause()
     {
         pauseMenuUI.SetActive(false);
+        optionsMenu.SetActive(false);
         countDownUI.SetActive(true);
+        scoreDisplay.SetActive(true);
         countSound.Play();
         countDownText.text = "3";
         yield return new WaitForSecondsRealtime(0.5f);
@@ -94,5 +110,10 @@ public class PauseMenu : MonoBehaviour
         countDownUI.SetActive(false);
         Time.timeScale = 1f;
         GamePaused = false;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
